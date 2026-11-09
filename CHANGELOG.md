@@ -166,6 +166,7 @@
 * [BUGFIX] Ingester: Fix a TSDB being considered idle right after it is opened when its head has no in-order samples, for example after early compaction of non-owned series and a restart. With `-blocks-storage.tsdb.close-idle-tsdb-when-shipping-disabled` enabled, the TSDB and its recent blocks could be deleted minutes after the restart. #17137
 * [BUGFIX] MQE: Fix binary operations with `on (__name__, ...)` returning empty results when narrowing binary selectors is enabled and the other side has no metric name, for example `sum by (pod) (a) / on (__name__, pod) abs(b)`. Narrowing added a matcher for an empty metric name, which selects no series. #17156
 * [BUGFIX] MQE: Fix an issue where only part of a query that couldn't return results was optimized, resulting in trying to remotely execute an invalid query plan. #17152
+* [BUGFIX] Querier: Return the same value for a series every time when two samples of the series have the same timestamp but different values and come from different store-gateways, or from ingesters and store-gateways. Previously, the value depended on which response arrived first. #17249
 
 ### Mixin
 
